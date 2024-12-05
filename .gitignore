@@ -1,0 +1,9 @@
+variables.tf
+/variables.tf
+*.csv
+*.json
+*.xlsx
+*$.xlsx
+*.parquet
+*.db
+/__pychache__
