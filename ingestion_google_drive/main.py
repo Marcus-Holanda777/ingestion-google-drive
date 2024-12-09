@@ -14,7 +14,7 @@ async def receive_data(requests: Request):
 
     send_cloud_storage(responses)
 
-    return {"status": "Success"}
+    return {"status": "SuccessNovo"}
 
 
 def send_cloud_storage(responses):
