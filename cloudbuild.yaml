@@ -6,8 +6,8 @@ steps:
   args: ['push', 'gcr.io/$PROJECT_ID/app-image:$SHORT_SHA']
 
 - name: 'gcr.io/cloud-builders/gcloud'
-  args: ['run', 'deploy', 'pesquisa',
-         '--image', 'gcr.io/$PROJECT_ID/app-pesquisa:$SHORT_SHA',
+  args: ['run', 'deploy', 'app-pesquisa',
+         '--image', 'gcr.io/$PROJECT_ID/app-image:$SHORT_SHA',
          '--region', 'us-east1',
          '--platform', 'managed',
          '--allow-unauthenticated']
