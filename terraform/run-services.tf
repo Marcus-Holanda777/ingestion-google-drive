@@ -6,8 +6,9 @@ resource "google_cloud_run_service" "app_pesquisa" {
   template {
     spec {
       containers {
-        image = "gcr.io/${var.project_id}/app-image:latest"
+        image = "gcr.io/${var.project_id}/${var.app_name_run}:latest"
       }
+      service_account_name = google_service_account.pesquisa_account.email
     }
   }
 
@@ -22,17 +23,45 @@ resource "google_cloud_run_service_iam_member" "pesquisa_invover" {
   member   = "serviceAccount:${google_service_account.pesquisa_account.email}"
 }
 
-# Criar um gatilho no Cloud Build
 resource "google_cloudbuild_trigger" "github_trigger" {
-  name = "github-trigger"
+  name = "trigger-pesquisa"
 
   github {
-    owner = "Marcus-Holanda777"
-    name  = "https://github.com/Marcus-Holanda777/ingestion-google-drive"
+    owner        = var.github_owner
+    name         = var.github_repo
     push {
-      branch = "^main$"
+      branch = "main"
     }
   }
 
-  filename = "cloudbuild.yaml"
+  build {
+    step {
+      name = "gcr.io/cloud-builders/docker"
+      args = [
+        "build", "-t", "gcr.io/${var.project_id}/${var.app_name_run}:$COMMIT_SHA", "."
+      ]
+    }
+    step {
+      name = "gcr.io/cloud-builders/docker"
+      args = [
+        "push", "gcr.io/${var.project_id}/${var.app_name_run}:$COMMIT_SHA"
+      ]
+    }
+    step {
+      name = "gcr.io/cloud-builders/gcloud"
+      args = [
+        "run", "deploy", var.app_name_run,
+        "--image", "gcr.io/${var.project_id}/${var.app_name_run}:$COMMIT_SHA",
+        "--region", var.region,
+        "--platform", "managed",
+        "--allow-unauthenticated",
+        "--service-account", google_service_account.pesquisa_account.email
+      ]
+    }
+    substitutions = {
+      _SERVICE_NAME = var.app_name_run
+      _REGION       = var.region
+    }
+    timeout = "1200s"
+  }
 }
