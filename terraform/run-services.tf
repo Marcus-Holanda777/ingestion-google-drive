@@ -28,6 +28,12 @@ resource "google_project_iam_member" "gcr_storage_admin" {
   member  = "serviceAccount:${google_service_account.pesquisa_account.email}"
 }
 
+resource "google_project_iam_member" "artifact_create_on_push_writer" {
+  project = var.project_id
+  role    = "roles/artifactregistry.createOnPushWriter"
+  member  = "serviceAccount:${google_service_account.pesquisa_account.email}"
+}
+
 resource "google_cloudbuild_trigger" "github_trigger" {
   project         = var.project_id
   name            = "trigger-pesquisa"
