@@ -67,6 +67,7 @@ resource "google_cloudbuild_trigger" "github_trigger" {
       args = [
         "run", "deploy", var.app_name_run,
         "--image", "gcr.io/${var.project_id}/${var.app_name_run}:$COMMIT_SHA",
+        "--region", var.region,
         "--platform", "managed",
         "--no-allow-unauthenticated",
         "--service-account", google_service_account.pesquisa_account.email
