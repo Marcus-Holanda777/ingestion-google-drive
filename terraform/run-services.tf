@@ -1,3 +1,27 @@
+resource "google_project_iam_member" "cloud_run_admin" {
+  project = var.project_id
+  role    = "roles/run.admin"
+  member  = "serviceAccount:${google_service_account.pesquisa_account.email}"
+}
+
+resource "google_project_iam_member" "cloud_build_editor" {
+  project = "<SEU_PROJETO>"
+  role    = "roles/cloudbuild.builds.editor"
+  member  = "serviceAccount:${google_service_account.pesquisa_account.email}"
+}
+
+resource "google_project_iam_member" "service_account_user" {
+  project = "<SEU_PROJETO>"
+  role    = "roles/iam.serviceAccountUser"
+  member  = "serviceAccount:${google_service_account.pesquisa_account.email}"
+}
+
+resource "google_project_iam_member" "artifact_registry_admin" {
+  project = "<SEU_PROJETO>"
+  role    = "roles/artifactregistry.admin"
+  member  = "serviceAccount:${google_service_account.pesquisa_account.email}"
+}
+
 resource "google_cloudbuild_trigger" "github_trigger" {
   project         = var.project_id
   name            = "trigger-pesquisa"
