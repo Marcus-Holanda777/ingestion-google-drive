@@ -8,4 +8,4 @@ RUN pip install --no-cache-dir --upgrade -r /ingestion_google_drive/requirements
 
 ENV PORT 8080
 
-CMD ["fastapi", "run", "ingestion_google_drive/main.py", "--port", "${PORT}"]
+CMD ["fastapi", "run", "ingestion_google_drive/main.py", "--port", "$PORT"]
