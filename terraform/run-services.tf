@@ -69,7 +69,7 @@ resource "google_cloudbuild_trigger" "github_trigger" {
         "--image", "gcr.io/${var.project_id}/${var.app_name_run}:$COMMIT_SHA",
         "--region", var.region,
         "--platform", "managed",
-        "--allow-unauthenticated",
+        "--no-allow-unauthenticated",
         "--service-account", google_service_account.pesquisa_account.email
       ]
     }
