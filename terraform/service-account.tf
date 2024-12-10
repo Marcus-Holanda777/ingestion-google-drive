@@ -1,6 +1,6 @@
 resource "google_service_account" "pesquisa_account" {
   account_id   = var.bucket_name
-  display_name = "recebe r"
+  display_name = "pesquisa mercado app"
 }
 
 resource "google_service_account_key" "pesquisa_account_key" {
