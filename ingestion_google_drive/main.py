@@ -23,13 +23,13 @@ async def receive_data(requests: Request):
 
 
 def send_cloud_storage(responses):
-    file_to = f'response_{datetime.now():%Y%m%d_%H%M}'
+    file_to = f'data/response_{datetime.now():%Y%m%d_%H%M}'
 
     client = storage.Client()
     bucket = client.bucket(bucket_name)
     blob = bucket.blob(file_to)
 
     blob.upload_from_string(
-        data=json.dumps(responses, indent=4),
+        data=json.dumps(responses, indent=4, ensure_ascii=False),
         content_type='application/json'
     )

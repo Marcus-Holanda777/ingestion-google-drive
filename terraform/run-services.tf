@@ -63,7 +63,7 @@ resource "google_cloudbuild_trigger" "github_trigger" {
       ]
     }
     step {
-      name = "gcr.io/google.com/cloudsdktool/cloud-sdk"
+      name       = "gcr.io/google.com/cloudsdktool/cloud-sdk"
       entrypoint = "gcloud"
       args = [
         "run", "deploy", var.app_name_run,
