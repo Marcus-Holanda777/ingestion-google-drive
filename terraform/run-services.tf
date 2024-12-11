@@ -63,14 +63,16 @@ resource "google_cloudbuild_trigger" "github_trigger" {
       ]
     }
     step {
-      name = "gcr.io/cloud-builders/gcloud"
+      name = "gcr.io/google.com/cloudsdktool/cloud-sdk"
+      entrypoint = "gcloud"
       args = [
         "run", "deploy", var.app_name_run,
         "--image", "gcr.io/${var.project_id}/${var.app_name_run}:$COMMIT_SHA",
         "--region", var.region,
         "--platform", "managed",
         "--no-allow-unauthenticated",
-        "--service-account", google_service_account.pesquisa_account.email
+        "--service-account", google_service_account.pesquisa_account.email,
+        "--update-env-vars", "BUCKET_NAME=${var.bucket_name}"
       ]
     }
     substitutions = {

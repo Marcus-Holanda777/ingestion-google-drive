@@ -3,9 +3,15 @@ from fastapi import (
     Request,
     status
 )
-
+from google.cloud import storage
+import json
+from datetime import datetime
+import os
 
 app = FastAPI()
+
+bucket_name = os.getenv('BUCKET_NAME')
+
 
 @app.post("/", status_code=status.HTTP_200_OK)
 async def receive_data(requests: Request):
@@ -13,9 +19,17 @@ async def receive_data(requests: Request):
     responses = data['responses']
 
     send_cloud_storage(responses)
-
-    return {"status": "SuccessNovo"}
+    return {"status": "Data entered successfully"}
 
 
 def send_cloud_storage(responses):
-    print(responses)
+    file_to = f'response_{datetime.now():%Y%m%d_%H%M}'
+
+    client = storage.Client()
+    bucket = client.bucket(bucket_name)
+    blob = bucket.blob(file_to)
+
+    blob.upload_from_string(
+        data=json.dumps(responses, indent=4),
+        content_type='application/json'
+    )
