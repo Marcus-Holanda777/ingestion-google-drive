@@ -126,6 +126,11 @@ O gatilho de execução será configurado por meio do App Script, se integrando 
     }
     ```
 
+    - Agora vá em "Acionadores" e crie um gatilho para que ao clicar no botão `enviar` do formulário, seja acionado a função `onFormSubmit`
+
+    ![edit script](imgs/05_add_script.png)    
+
+
 ### 2. Desenvolvimento do Script Python
 
 1. Crie um script Python que:
