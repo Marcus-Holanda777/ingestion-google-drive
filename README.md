@@ -203,21 +203,21 @@ A integração entre o GitHub e o Cloud Build permite que alterações feitas no
 
 1. Conectar o repositório do GitHub ao Cloud Build.
 
-Siga as etapas detalhadas na documentação oficial do Google Cloud para conectar seu repositório GitHub ao Cloud Build:  
-[Configurar GitHub com o Cloud Build (1ª geração)](https://cloud.google.com/build/docs/automating-builds/github/connect-repo-github?hl=pt-br&generation=1st-gen)
+    Siga as etapas detalhadas na documentação oficial do Google Cloud para conectar seu repositório GitHub ao Cloud Build:  
+    [Configurar GitHub com o Cloud Build (1ª geração)](https://cloud.google.com/build/docs/automating-builds/github/connect-repo-github?hl=pt-br&generation=1st-gen)
 
 2. Escreva os arquivos de configuração do Terraform para provisionar os recursos necessários:
 
-- Cloud Storage
-- Configurações do IAM
-- Configuração do gatilho do GitHub
+    - Cloud Storage
+    - Configurações do IAM
+    - Configuração do gatilho do GitHub
 
 3. Execute os comandos:
 
-```bash
-terraform init
-terraform apply
-```
+    ```bash
+    terraform init
+    terraform apply
+    ```
 
 ---
 
