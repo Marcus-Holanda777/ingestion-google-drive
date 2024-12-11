@@ -54,7 +54,7 @@ O gatilho de execução será configurado por meio do App Script, se integrando 
 > - Certifique-se de que o Apps Script esteja no mesmo projeto GCP que o serviço Cloud Run 
 > - Habilite a tela de consentimento do OAuth em APIs e serviços no seu projeto do GCP [Aqui](https://support.google.com/cloud/answer/6158849?hl=en#)
 
-1. No Google Formulários:
+1. Google Formulários e Apps Script:
     - Crie um novo formulario em branco.
     ![form new](imgs/01_add_form.png)
     
@@ -64,8 +64,26 @@ O gatilho de execução será configurado por meio do App Script, se integrando 
     - Em configuracoes selecione `Mostrar arquivo de manifesto "appsscript.json" no editor`
     ![edit script](imgs/03_add_script.png)
 
-    - Ainda na aba de configurações click em `Alterar projeto` e informe o nome do projeto no GCP
+    - Ainda na aba de configurações click em `Alterar projeto` e informe o numero do projeto no GCP
     ![edit script](imgs/04_add_script.png)
+
+    - Abra o arquivo "appsscript.json" e adicione o escopo necessário para poder integrar posteriormente com o cloud run
+    
+    ```javascript
+    {
+        "timeZone": "America/Fortaleza",
+        "dependencies": {
+        },
+        "exceptionLogging": "STACKDRIVER",
+        "runtimeVersion": "V8",
+        "oauthScopes": [
+            "https://www.googleapis.com/auth/script.container.ui",
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/script.external_request",
+            "openid"
+        ]
+    }
+    ```
 
 ### 2. Desenvolvimento do Script Python
 
