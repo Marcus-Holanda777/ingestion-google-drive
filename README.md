@@ -59,7 +59,7 @@ O gatilho de execução será configurado por meio do App Script, se integrando 
     ![form new](imgs/01_add_form.png)
     
     - Acione o editor de script.
-    ![edit script](imgs/02_add_sript.png)
+    ![edit script](imgs/02_add_script.png)
 
     - Adicione um gatilho para acionar o script sempre que uma nova resposta for submetida ao Google Form.
     - Configure o gatilho para chamar o endpoint do Cloud Run.
