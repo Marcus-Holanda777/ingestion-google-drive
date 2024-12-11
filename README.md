@@ -132,10 +132,8 @@ O gatilho de execução será configurado por meio do App Script, se integrando 
 
 
 ### 2. Desenvolvimento do Script Python
->[!NOTE]
-> - Instale as bibliotecas python
->   `pip install fastapi`
->   `pip install google-cloud-storage`
+>[!IMPORTANT]
+> Instale as bibliotecas python `pip install fastapi` e `pip install google-cloud-storage`
 
 1. Crie um script Python que:
     - Receba dados enviados pelo App Script via requisição HTTP.
@@ -199,35 +197,22 @@ EXPOSE 8080
 CMD ["fastapi", "run", "/ingestion_google_drive/main.py", "--port", "8080"]
 ```
 
-2. Gere a imagem Docker:
+### 4. Configuração do Cloud Run com Cloud Build, Github e terraform
 
-```bash
-docker build -t app-script-processor .
-```
+A integração entre o GitHub e o Cloud Build permite que alterações feitas no repositório sejam automaticamente refletidas nos processos de build e deploy da infraestrutura, proporcionando maior eficiência e reduzindo erros manuais.
 
-### 4. Configuração do Cloud Run
+1. Conectar o repositório do GitHub ao Cloud Build.
 
-1. Suba o container para o Cloud Run:
+Siga as etapas detalhadas na documentação oficial do Google Cloud para conectar seu repositório GitHub ao Cloud Build:  
+[Configurar GitHub com o Cloud Build (1ª geração)](https://cloud.google.com/build/docs/automating-builds/github/connect-repo-github?hl=pt-br&generation=1st-gen)
 
-```bash
-gcloud run deploy app-script-processor \
-    --image gcr.io/YOUR_PROJECT_ID/app-script-processor \
-    --platform managed \
-    --region YOUR_REGION \
-    --allow-unauthenticated
-```
-
-2. Copie o endpoint gerado para configurar no App Script.
-
-### 5. Automação com Terraform
-
-1. Escreva os arquivos de configuração do Terraform para provisionar os recursos necessários:
+2. Escreva os arquivos de configuração do Terraform para provisionar os recursos necessários:
 
 - Cloud Storage
 - Configurações do IAM
-- Integração com o GitHub para CI/CD
+- Configuração do gatilho do GitHub
 
-2. Execute os comandos:
+3. Execute os comandos:
 
 ```bash
 terraform init
@@ -239,23 +224,37 @@ terraform apply
 ## Estrutura do Repositório
 
 ```plaintext
-
-    ingestion_google_drive/
-    ├── __init__.py
-    ├── main.py
-    └── requirements.txt
-    terraform/
-    ├── provider.tf
-    ├── run-services.tf
-    ├── service-account.tf
-    ├── storage-bucket.tf
-    └── variables.tf
-    Dockerfile
-
+ingestion_google_drive/
+├── __init__.py
+├── main.py
+└── requirements.txt
+terraform/
+├── provider.tf
+├── run-services.tf
+├── service-account.tf
+├── storage-bucket.tf
+└── variables.tf
+Dockerfile
 ```
 
 ---
 
-## Contribuições
+## Conclusão
 
-Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou pull requests.
+Este projeto foi desenvolvido com o objetivo de criar uma automação eficiente e escalável para a coleta de dados de um Google Drive, simulando cenários comuns em empresas de pequeno e médio porte. A implementação utiliza tecnologias modernas, como Cloud Run, Terraform e Cloud Build, para garantir automação, confiabilidade e facilidade de gerenciamento.  
+
+Além disso, ao integrar o Google Forms e Sheets por meio do App Script, conseguimos criar um fluxo contínuo que permite a ingestão de dados em tempo real para o armazenamento em uma camada raw, criando uma base sólida para análises futuras.
+
+# Indicação de Conteúdos
+Aqui indicamos conteúdos internos da Apoena Stack e externos que podem auxiliar na sua trilha de construção desse projeto.
+
+## Conteúdos da Plataforma da Apoena Stack
+- [Curso Agregando Valor com Baixo Custo](https://apoenastack.ensinio.com/g/agregando-valor-com-baixo-custo/classwork)
+- [Curso Disponibilidade de Dados via API com Google Cloud](https://apoenastack.ensinio.com/g/disponibilidade-de-dados-via-api-com-google-cloud/classwork)
+
+## Conteúdos Externos
+- [How to call Google Cloud Run (or Cloud Functions) from Apps Scripts](https://medium.com/geekculture/how-to-call-google-cloud-run-or-cloud-functions-from-apps-scripts-c0086289c965)
+- [Tutorial: Como Criar um Gatilho no Google Apps Script](https://support.google.com/docs/community-guide/258700586/tutorial-como-criar-um-gatilho-no-google-apps-script?hl=pt-BR)
+
+## Documentações
+- [Como implantar no Cloud Run usando o Cloud Build](https://cloud.google.com/build/docs/deploying-builds/deploy-cloud-run?hl=pt-br)
