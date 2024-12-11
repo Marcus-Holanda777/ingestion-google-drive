@@ -56,19 +56,23 @@ O gatilho de execução será configurado por meio do App Script, se integrando 
 
 1. Google Formulários e Apps Script:
     - Crie um novo formulario em branco.
+
     ![form new](imgs/01_add_form.png)
     
     - Acione o editor de script.
+
     ![edit script](imgs/02_add_script.png)
 
     - Em configuracoes selecione `Mostrar arquivo de manifesto "appsscript.json" no editor`
+
     ![edit script](imgs/03_add_script.png)
 
     - Ainda na aba de configurações click em `Alterar projeto` e informe o numero do projeto no GCP
+
     ![edit script](imgs/04_add_script.png)
 
     - Abra o arquivo "appsscript.json" e adicione o escopo necessário para poder integrar posteriormente com o cloud run
-    
+
     ```javascript
     {
         "timeZone": "America/Fortaleza",
@@ -82,6 +86,43 @@ O gatilho de execução será configurado por meio do App Script, se integrando 
             "https://www.googleapis.com/auth/script.external_request",
             "openid"
         ]
+    }
+    ```
+
+    - Crie no editor o arquivo "btn_submit.gs", esse arquivo sera responsavel por enviar as respostas para o Clour Run
+    
+    ```javascript
+    function sendCloudRun(responses) {
+        const URI_CLOUD_RUN = "<URL_CLOUD_RUN>";
+        const token = ScriptApp.getIdentityToken();
+
+        const payload = {
+            responses: responses
+        };
+
+        const options = {
+            method: "post",
+            contentType: "application/json",
+            headers: {"Authorization":"Bearer "+token},
+            payload: JSON.stringify(payload, null, 2)
+        };
+    
+        const responsesApi = UrlFetchApp.fetch(URI_CLOUD_RUN, options);
+        Logger.log(responsesApi.getContentText());
+    }
+
+    function onFormSubmit(e) {    
+        const formResponse = e.response;
+
+        const responses = formResponse.getItemResponses().map((itemResponse) => {
+            return {
+                question: itemResponse.getItem().getTitle(),
+                response: itemResponse.getResponse()
+            }
+          }
+        );
+
+        sendCloudRun(responses);
     }
     ```
 
