@@ -50,9 +50,9 @@ O gatilho de execução será configurado por meio do App Script, se integrando 
 
 ### 1. Configuração do App Script
 > [!IMPORTANT]  
-> Crie primeiro o App Script antes de implementar o Cloud Run
-> Certifique-se de que o Apps Script esteja no mesmo projeto GCP que o serviço Cloud Run 
-> Habilite a tela de consentimento do OAuth em APIs e serviços no seu projeto do GCP [Aqui](https://support.google.com/cloud/answer/6158849?hl=en#)
+> - Crie primeiro o App Script antes de implementar o Cloud Run
+> - Certifique-se de que o Apps Script esteja no mesmo projeto GCP que o serviço Cloud Run 
+> - Habilite a tela de consentimento do OAuth em APIs e serviços no seu projeto do GCP [Aqui](https://support.google.com/cloud/answer/6158849?hl=en#)
 
 1. No Google Formulários:
     - Crie um novo formulario em branco.
