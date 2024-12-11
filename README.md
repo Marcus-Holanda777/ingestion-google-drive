@@ -61,8 +61,11 @@ O gatilho de execução será configurado por meio do App Script, se integrando 
     - Acione o editor de script.
     ![edit script](imgs/02_add_script.png)
 
-    - Adicione um gatilho para acionar o script sempre que uma nova resposta for submetida ao Google Form.
-    - Configure o gatilho para chamar o endpoint do Cloud Run.
+    - Em configuracoes selecione `Mostrar arquivo de manifesto "appsscript.json" no editor`
+    ![edit script](imgs/03_add_script.png)
+
+    - Ainda na aba de configurações click em `Alterar projeto` e informe o nome do projeto no GCP
+    ![edit script](imgs/04_add_script.png)
 
 ### 2. Desenvolvimento do Script Python
 
