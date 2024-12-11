@@ -132,6 +132,10 @@ O gatilho de execução será configurado por meio do App Script, se integrando 
 
 
 ### 2. Desenvolvimento do Script Python
+>[!NOTE]
+> - Instale as bibliotecas python
+>   `pip install fastapi`
+>   `pip install google-cloud-storage`
 
 1. Crie um script Python que:
     - Receba dados enviados pelo App Script via requisição HTTP.
@@ -220,7 +224,6 @@ gcloud run deploy app-script-processor \
 1. Escreva os arquivos de configuração do Terraform para provisionar os recursos necessários:
 
 - Cloud Storage
-- Cloud Run
 - Configurações do IAM
 - Integração com o GitHub para CI/CD
 
@@ -231,26 +234,24 @@ terraform init
 terraform apply
 ```
 
-### 6. Integração e Testes
-
-1. Atualize o App Script para enviar os dados ao Cloud Run.
-2. Realize testes enviando respostas ao formulário e verifique se os dados são processados e armazenados corretamente.
-
 ---
 
 ## Estrutura do Repositório
 
 ```plaintext
-/
-├── app/                # Código fonte do script Python
-│   ├── main.py
-│   ├── requirements.txt
-│   └── Dockerfile
-├── terraform/          # Configurações do Terraform
-│   ├── main.tf
-│   ├── variables.tf
-│   └── outputs.tf
-└── README.md           # Documentação do projeto
+
+    ingestion_google_drive/
+    ├── __init__.py
+    ├── main.py
+    └── requirements.txt
+    terraform/
+    ├── provider.tf
+    ├── run-services.tf
+    ├── service-account.tf
+    ├── storage-bucket.tf
+    └── variables.tf
+    Dockerfile
+
 ```
 
 ---
